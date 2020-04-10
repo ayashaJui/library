@@ -43,19 +43,14 @@ class AccessnosController extends Controller
         $cat = $request->get('name');
         $accessCat = Category::where('name', $cat)->first();
         $booktitle = $request->get('title');
-        $accessTitle = Book::where('title', $booktitle)->first();
         $ed = $request->get('edition');
-        $accessEd = Book::where('edition', $ed)->first();
+        $accessBook = Book::where('title',$booktitle)
+                            ->where('edition', $ed)->first();
 
         $accessno = new Accessno;
         $accessno->access_no = $request->input('access_no');
         $accessno->category_id = $accessCat->id;
-        if($accessTitle->id == $accessEd->id){
-            $accessno->book_id = $accessTitle->id;
-        }
-        else{
-            return redirect('/books')->with('error','Invalid Information');
-        }
+        $accessno->book_id = $accessBook->id;
 
         $accessno->save(); 
 
@@ -101,19 +96,15 @@ class AccessnosController extends Controller
         $cat = $request->get('name');
         $accessCat = Category::where('name', $cat)->first();
         $booktitle = $request->get('title');
-        $accessTitle = Book::where('title', $booktitle)->first();
         $ed = $request->get('edition');
-        $accessEd = Book::where('edition', $ed)->first();
+        $accessBook = Book::where('title',$booktitle)
+                            ->where('edition', $ed)->first();
 
         $accessno = Accessno::find($id);
+        $accessno = new Accessno;
         $accessno->access_no = $request->input('access_no');
         $accessno->category_id = $accessCat->id;
-        if($accessTitle->id == $accessEd->id){
-            $accessno->book_id = $accessTitle->id;
-        }
-        else{
-            return redirect('/books')->with('error','Invalid Information');
-        }
+        $accessno->book_id = $accessBook->id;
 
         $accessno->save(); 
 
