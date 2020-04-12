@@ -44,18 +44,20 @@ class IssueteachersController extends Controller
         $teacher = Teacher::where('name', $teach)->first();
         $access = $request->get('access_no');
         $teaAccess = Accessno::where('access_no', $access)->first();
-        $booktitle = $request->get('title');
-        $teabook = Book::where('title',$booktitle)->first();
+        /*$booktitle = $request->get('title');
+        $teabook = Book::where('title',$booktitle)->first();*/
 
         $issueteacher = new Issueteacher;
         $issueteacher->teacher_id = $teacher->id;
-        if($teabook->id == $teaAccess->book->id){
+        $issueteacher->access_id = $teaAccess->id;
+        $issueteacher->book_id = $teaAccess->book->id;
+        /*if($teabook->id == $teaAccess->book->id){
             $issueteacher->access_id = $teaAccess->id;
             $issueteacher->book_id = $teabook->id;
         }
         else{
             return redirect('/issueteachers')->with('error','Invalid Information');
-        }
+        }*/
 
         $issueteacher->save();
 
@@ -99,18 +101,20 @@ class IssueteachersController extends Controller
         $teacher = Teacher::where('name', $teach)->first();
         $access = $request->get('access_no');
         $teaAccess = Accessno::where('access_no', $access)->first();
-        $booktitle = $request->get('title');
-        $teabook = Book::where('title',$booktitle)->first();
+        /*$booktitle = $request->get('title');
+        $teabook = Book::where('title',$booktitle)->first();*/
 
         $issueteacher = Issueteacher::find($id);
         $issueteacher->teacher_id = $teacher->id;
-        if($teabook->id == $teaAccess->book->id){
+        $issueteacher->access_id = $teaAccess->id;
+        $issueteacher->book_id = $teaAccess->book->id;
+        /*if($teabook->id == $teaAccess->book->id){
             $issueteacher->access_id = $teaAccess->id;
             $issueteacher->book_id = $teabook->id;
         }
         else{
             return redirect('/issueteachers')->with('error','Invalid Information');
-        }
+        }*/
 
         $issueteacher->save();
 

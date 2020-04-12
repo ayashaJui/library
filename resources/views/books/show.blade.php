@@ -9,7 +9,7 @@
         <div class="container"><br>
             <h2 class="display-3"><em>{{$book->title}}</em></h2>
             <br><br>
-            <a class="btn btn-dark" href="/access_nos/create" role="button">+Add New Access No</a>
+            <a class="btn btn-dark" href="/access_nos/{{$book->id}}" role="button">+Add New Access No</a>
         </div>
     </div>
     <div class="container">
@@ -29,9 +29,9 @@
                             <th scope="row">{{$bookAccessno->firstItem() + $key}}</th>
                             <td>{{$bookAccess->access_no}}</td>
                             <td>
-                                <a class="btn btn-primary btn-sm" href="/access_nos/{{$bookAccess->id}}/edit" role="button"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-primary btn-sm" href="/access_nos/{{$bookAccess->book->id}}/{{$bookAccess->id}}/edit" role="button"><i class="fas fa-edit"></i></a>
                                 {!!Form::open(['action' => ['AccessnosController@destroy', $bookAccess->id], 'method' => 'POST', 'class'=>'float-right'])!!}
-                                    {{Form::hidden('_method', 'DELETE')}}
+                                    
                                     {{Form::button('<i class="fas fa-trash-alt"></i>',['type'=>'submit', 'class'=>'btn btn-danger btn-sm'])}}
                                 {!!Form::close()!!}
                             </td>

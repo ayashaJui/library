@@ -29,10 +29,6 @@
             {{Form::text('access_no','',['class' => 'form-control', 'placeholder' => 'access no'])}}
         </div>
         <div class="form-group">
-            {{Form::label('title','Book Title')}}
-            {{Form::text('title','',['class' => 'form-control', 'placeholder' => 'title'])}}
-        </div>
-        <div class="form-group">
             {{Form::label('return','Return Date')}}
             {{Form::dateTime('return','',['class' => 'form-control', 'placeholder' => 'year-month-day'])}}
         </div> 

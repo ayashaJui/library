@@ -51,19 +51,21 @@ class IssuestudsController extends Controller
         $stud = Student::where('roll', $sroll)->first();
         $bookaccess = $request->get('access_no');
         $access = Accessno::where('access_no', $bookaccess)->first();
-        $booktitle = $request->get('title');
-        $book = Book::where('title',$booktitle)->first();
+        /*$booktitle = $request->get('title');
+        $book = Book::where('title',$booktitle)->first();*/
             
         $issuestud = new Issuestud;
         $issuestud->batch_id = $request->batch_id;
         $issuestud->student_id = $stud->id;
-        if($book->id == $access->book->id){
+        $issuestud->access_id = $access->id;
+        $issuestud->book_id = $access->book->id;
+        /*if($book->id == $access->book->id){
             $issuestud->access_id = $access->id;
             $issuestud->book_id = $book->id;
         }
         else{
             return redirect('/issuestuds')->with('error','Invalid Information');
-        }
+        }*/
         $issuestud->return = $request->input('return');
 
         $issuestud->save(); 
@@ -113,19 +115,21 @@ class IssuestudsController extends Controller
         $stud = Student::where('roll', $sroll)->first();
         $bookaccess = $request->get('access_no');
         $access = Accessno::where('access_no', $bookaccess)->first();
-        $booktitle = $request->get('title');
-        $book = Book::where('title',$booktitle)->first();
+        /*$booktitle = $request->get('title');
+        $book = Book::where('title',$booktitle)->first();*/
 
         $issuestud = Issuestud::find($id);
         $issuestud->batch_id = $request->batch_id;
         $issuestud->student_id = $stud->id;
-        if($book->id == $access->book->id){
+        $issuestud->access_id = $access->id;
+        $issuestud->book_id = $access->book->id;
+        /*if($book->id == $access->book->id){
             $issuestud->access_id = $access->id;
             $issuestud->book_id = $book->id;
         }
         else{
             return redirect('/issuestuds')->with('error','Invalid Information');
-        }
+        }*/
         $issuestud->save(); 
 
         return redirect('/issuestuds')->with('success','Successfully Updated Issued Book.');

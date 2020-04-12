@@ -74,9 +74,9 @@ class BooksController extends Controller
      */
     public function show($id)
     {
-        $bookAccessno = Accessno::where('book_id', $id)->paginate(10);
+        $bookAccessno = Accessno::where('book_id', $id)->orderBy('access_no', 'asc')->paginate(10);
         $book = Book::find($id);
-
+        
         return view('books.show', ['bookAccessno'=> $bookAccessno, 'book'=> $book]);
     }
 

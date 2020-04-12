@@ -12,14 +12,23 @@
 */
 
 Route::get('/', 'PagesController@home');
+
+//....Search...
 Route::get('/searchBook', 'BooksController@searchBook');
 Route::get('/searchCat', 'CategoriesController@searchCat');
 Route::get('/searchTea', 'TeachersController@searchTea');
 Route::get('/searchStud', 'BatchesController@searchStud');
 
+//....AccessnosController....
+Route::get('access_nos/{id}', 'AccessnosController@create');
+Route::post('store/{id}', 'AccessnosController@store');
+Route::get('/access_nos/{book_id}/{id}/edit', 'AccessnosController@edit');
+Route::put('update/{book_id}/{id}', 'AccessnosController@update');
+Route::post('destroy/{id}', 'AccessnosController@destroy');
+
+//...Resource.....
 Route::resource('categories','CategoriesController');
 Route::resource('books','BooksController');
-Route::resource('access_nos','AccessnosController');
 Route::resource('batches','BatchesController');
 Route::resource('students','StudentsController');
 Route::resource('teachers','TeachersController');

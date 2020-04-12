@@ -24,9 +24,11 @@ class AccessnosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        return view('access_nos.create');
+        $book = Book::find($id);
+    
+        return view('access_nos.create')->with('book', $book);
     }
 
     /**
@@ -35,22 +37,23 @@ class AccessnosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         $this->validate($request,[
             'access_no'=>'required'
         ]);
-        $cat = $request->get('name');
-        $accessCat = Category::where('name', $cat)->first();
-        $booktitle = $request->get('title');
+        //$cat = $request->get('name');
+        //$accessCat = Category::where('name', $cat)->first();
+        /*$booktitle = $request->get('title');
         $ed = $request->get('edition');
         $accessBook = Book::where('title',$booktitle)
-                            ->where('edition', $ed)->first();
-
+                            ->where('edition', $ed)->first();*/
+        
+        $accessbook = Book::find($id);
         $accessno = new Accessno;
         $accessno->access_no = $request->input('access_no');
-        $accessno->category_id = $accessCat->id;
-        $accessno->book_id = $accessBook->id;
+        $accessno->category_id = $accessbook->category->id;
+        $accessno->book_id = $accessbook->id;
 
         $accessno->save(); 
 
@@ -74,11 +77,12 @@ class AccessnosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($book_id, $id)
     {
         $accessno = Accessno::find($id);
+        $book = Book::find($book_id);
         
-        return view('access_nos.edit')->with('accessno', $accessno);
+        return view('access_nos.edit', ['accessno'=> $accessno, 'book'=> $book]);
     }
 
     /**
@@ -88,23 +92,23 @@ class AccessnosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $book_id, $id)
     {
         $this->validate($request,[
             'access_no'=>'required'
         ]);
-        $cat = $request->get('name');
+        /*$cat = $request->get('name');
         $accessCat = Category::where('name', $cat)->first();
         $booktitle = $request->get('title');
         $ed = $request->get('edition');
         $accessBook = Book::where('title',$booktitle)
-                            ->where('edition', $ed)->first();
+                            ->where('edition', $ed)->first();*/
 
         $accessno = Accessno::find($id);
-        $accessno = new Accessno;
+        $accessbook = Book::find($book_id);    
         $accessno->access_no = $request->input('access_no');
-        $accessno->category_id = $accessCat->id;
-        $accessno->book_id = $accessBook->id;
+        $accessno->category_id = $accessbook->category->id;
+        $accessno->book_id = $accessbook->id;
 
         $accessno->save(); 
 
