@@ -1,5 +1,6 @@
 <?php
-    use App\Accessno;
+    use App\Http\Controllers\AccessnosController;
+    use App\Http\Controllers\BooksController;
 ?>
 @extends('layouts.app')
 
@@ -38,21 +39,24 @@
                 <th scope="col">Category</th>
                 <th scope="col">Edition</th>
                 <th scope="col">Publisher</th>
+                <th scope="col">Available<br>Quantity</th>
                 <th scope="col">+</th>
             </tr>
             </thead>
             <tbody>
                 @foreach($books as $key => $book)
                 <?php
-                    $accessCount = Accessno::accesscount($book->id);
+                    //$accessCount = Accessno::accesscount($book->id);
+                     
                 ?>
                     <tr>
                         <th scope="row">{{$books->firstItem() + $key}}</th>
-                        <td><a href="/books/{{$book->id}}">{{$book->title}}({{ $accessCount }})</a></td>
+                        <td><a href="/books/{{$book->id}}">{{$book->title}}({{ AccessnosController::accessCount($book->id) }})</a></td>
                         <td>{{$book->author_name}}</td>
                         <td>{{$book->category->name}}</td>
                         <td>{{$book->edition}}</td>
                         <td>{{$book->publisher}}</td>
+                        <td>{{ App\Http\Controllers\BooksController::quantity($book->id) }}</td>
                         <td>
                             <a class="btn btn-primary btn-sm" href="/books/{{$book->id}}/edit" role="button"><i class="fas fa-edit"></i></a>
                             {!!Form::open(['action' => ['BooksController@destroy', $book->id], 'method' => 'POST', 'class'=>'float-right'])!!}

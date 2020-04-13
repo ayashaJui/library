@@ -1,5 +1,5 @@
 <?php 
-    use App\Student;
+    use App\Http\Controllers\StudentsController;
 ?>
 @extends('layouts.app')
 
@@ -51,12 +51,9 @@
         @include('include.message')
         @if(count($batches) > 0)
             @foreach ($batches as $batch)
-            <?php
-                $studCount = Student::studcount($batch->id);
-            ?>
                 <div class="card">
                     <div class="card-body">
-                        <a href="/batches/{{$batch->id}}"><h4>Batch'{{$batch->title}}({{$studCount}})</h4></a>
+                        <a href="/batches/{{$batch->id}}"><h4>Batch'{{$batch->title}}({{ StudentsController::studentCount($batch->id)}})</h4></a>
                         <p>Program:{{$batch->program}}</p>
                         created at {{$batch->created_at}} & updated at {{$batch->updated_at}}
                         <div class="container">

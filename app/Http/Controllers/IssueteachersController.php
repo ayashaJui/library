@@ -75,6 +75,12 @@ class IssueteachersController extends Controller
         //
     }
 
+    public static function issueCount($id)
+    {
+        $issueCount = Issueteacher::where('teacher_id', $id)->count();
+
+        return $issueCount;
+    }
     /**
      * Show the form for editing the specified resource.
      *

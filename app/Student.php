@@ -16,10 +16,6 @@ class Student extends Model
     public function batch(){
         return $this->belongsTo('App\Batch','batch_id');
     }
-    public static function studcount($batch_id){
-        $batchCount = Student::where('batch_id', $batch_id)->count();
-        return $batchCount;
-    }
     public function issuestud(){
         return $this->hasMany('App\Issuestud');
     }

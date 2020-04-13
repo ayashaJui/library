@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Book;
 use App\Category;
 use App\Accessno;
+use App\Issuestud;
+use App\Issueteacher;
 
 class BooksController extends Controller
 {
@@ -78,6 +80,24 @@ class BooksController extends Controller
         $book = Book::find($id);
         
         return view('books.show', ['bookAccessno'=> $bookAccessno, 'book'=> $book]);
+    }
+
+    public static function bookCount($id)
+    {
+        $bookCount = Book::where('category_id', $id)->count();
+
+        return $bookCount;
+    }
+
+    public static function quantity($id)
+    {
+        $totalBook = Accessno::where('book_id', $id)->count();
+        $studIssue = Issuestud::where('book_id', $id)->count();
+        $teaIssue = Issueteacher::where('book_id', $id)->count();
+
+        $quantity = ( $totalBook - ( $studIssue + $teaIssue));
+
+        return $quantity;
     }
 
     /**

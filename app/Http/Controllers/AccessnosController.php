@@ -71,6 +71,13 @@ class AccessnosController extends Controller
         //
     }
 
+    public static function accessCount($id)
+    {
+        $accessCount = Accessno::where('book_id', $id)->count();
+
+        return $accessCount;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

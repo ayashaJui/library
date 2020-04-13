@@ -9,8 +9,7 @@ class Issuestud extends Model
     protected $fillable = [ 
         'student_id',
         'batch_id',
-        'access_id',
-        'book_id'
+        'access_id'
     ];
 
     public function student(){
@@ -25,8 +24,8 @@ class Issuestud extends Model
     public function book(){
         return $this->belongsTo('App\Book','book_id');
     }
-    public static function issuecount($student_id){
+    /*public static function issuecount($student_id){
         $studCount = Issuestud::where('student_id', $student_id)->count();
         return $studCount;
-    }
+    }*/
 }

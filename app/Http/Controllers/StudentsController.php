@@ -68,6 +68,13 @@ class StudentsController extends Controller
         return view('students.show', ['studissues' =>$studissues, 'student' =>$student]);
     }
 
+    public static function studentCount($id)
+    {
+        $studentCount = Student::where('batch_id', $id)->count();
+        
+        return $studentCount;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

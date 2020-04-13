@@ -18,8 +18,4 @@ class Accessno extends Model
     public function book(){
         return $this->belongsTo('App\Book', 'book_id');
     }
-    public static function accesscount($book_id){
-        $bookCount = Accessno::where('book_id', $book_id)->count();
-        return $bookCount;
-    }
 }

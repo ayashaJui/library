@@ -84,6 +84,13 @@ class IssuestudsController extends Controller
         //
     }
 
+    public static function issuedBook($id)
+    {
+        $issuedBook = Issuestud::where('student_id', $id)->count();
+
+        return $issuedBook;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

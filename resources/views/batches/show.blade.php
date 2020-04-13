@@ -1,6 +1,5 @@
 <?php 
-    use App\Issuestud;
-    use App\Student;
+    use App\Http\Controllers\IssuestudsController;
 ?>
 @extends('layouts.app')
 
@@ -42,11 +41,8 @@
                 </thead>
                 <tbody>
                     @foreach($batchstuds as $batchstud)
-                    <?php
-                        $issueCount = Issuestud::issuecount($batchstud->id);
-                    ?>
                         <tr>
-                            <th scope="row"><a href="/students/{{$batchstud->id}}">{{$batchstud->roll}}({{$issueCount}})</a></th>
+                            <th scope="row"><a href="/students/{{$batchstud->id}}">{{$batchstud->roll}}({{ IssuestudsController::issuedBook($batchstud->id) }})</a></th>
                             <td>{{$batchstud->name}}</td>
                             <td>{{$batchstud->batch->title}}</td>
                             <td>{{$batchstud->batch->program}}</td>
