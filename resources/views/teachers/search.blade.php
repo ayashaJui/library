@@ -1,5 +1,5 @@
 <?php
-    use App\Issueteacher;
+    use App\Http\Controllers\IssueteachersController;
 ?>
 @extends('layouts.app')
 
@@ -39,11 +39,8 @@
                 </thead>
                 <tbody>
                     @foreach($teachers as $teacher)
-                        <?php
-                            $issueCount = Issueteacher::issuecount($teacher->id)
-                        ?>
                         <tr>
-                            <th scope="row"><a href="/teachers/{{$teacher->id}}">{{$teacher->name}}({{$issueCount}})</a></th>
+                            <th scope="row"><a href="/teachers/{{$teacher->id}}">{{$teacher->name}}({{ IssueteachersController::issueCount($teacher->id) }})</a></th>
                             <td>{{$teacher->desig}}</td>
                             <td>
                                 <a class="btn btn-primary btn-sm" href="/teachers/{{$teacher->id}}/edit" role="button"><i class="fas fa-edit"></i></a>

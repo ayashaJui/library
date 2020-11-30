@@ -45,10 +45,6 @@
             </thead>
             <tbody>
                 @foreach($books as $key => $book)
-                <?php
-                    //$accessCount = Accessno::accesscount($book->id);
-                     
-                ?>
                     <tr>
                         <th scope="row">{{$books->firstItem() + $key}}</th>
                         <td><a href="/books/{{$book->id}}">{{$book->title}}({{ AccessnosController::accessCount($book->id) }})</a></td>

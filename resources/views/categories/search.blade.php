@@ -1,5 +1,5 @@
 <?php
-    use App\Book;
+    use App\Http\Controllers\BooksController;
 ?>
 @extends('layouts.app')
 
@@ -16,7 +16,7 @@
     </div>
 
     <div class="container">
-        <form action="/searchBook" method="GET">
+        <form action="/searchCat" method="GET">
             <div class="input-group">
             <input type="search" name="search" value="{{$search}}" class="form-control" placeholder="search category">
                 <span class="input-group-prepend">
@@ -30,12 +30,9 @@
         @include('include.message')
         @if(count($categories) > 0)
             @foreach ($categories as $category)
-            <?php
-                $bookCount = Book::bookcount($category->id);
-            ?>
             <div class="card">
                 <div class="card-body">
-                    <a href="/categories/{{$category->id}}"><h4>{{$category->name}}({{ $bookCount }})</h4></a>
+                    <a href="/categories/{{$category->id}}"><h4>{{$category->name}}({{ BooksController::bookCount($category->id) }})</h4></a>
                     created at {{$category->created_at}} & updated at {{$category->updated_at}}
                     <div class="container">
                         <div class="btn-group float-right">
