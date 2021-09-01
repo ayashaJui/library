@@ -16,6 +16,7 @@
             <br><br>
         </div>
     </div>
+
     <div class="container">
         <form action="/searchBook" method="GET">
             <div class="input-group">
@@ -27,6 +28,7 @@
         </form>
     </div>
     <br><br>
+
     @if(count($books) > 0)
         <table class="table table-bordered table-dark table-hover">
             <thead>
@@ -50,9 +52,10 @@
                         <td>{{$book->category->name}}</td>
                         <td>{{$book->edition}}</td>
                         <td>{{$book->publisher}}</td>
-                        <td>{{ App\Http\Controllers\BooksController::quantity($book->id) }}</td>
+                        <td>{{ BooksController::availQuantity($book->id) }}</td>
                         <td>
                             <a class="btn btn-primary btn-sm" href="/books/{{$book->id}}/edit" role="button"><i class="fas fa-edit"></i></a>
+                            
                             {!!Form::open(['action' => ['BooksController@destroy', $book->id], 'method' => 'POST', 'class'=>'float-right'])!!}
                                 {{Form::hidden('_method', 'DELETE')}}
                                 {{Form::button('<i class="fas fa-trash-alt"></i>',['type'=>'submit', 'class'=>'btn btn-danger btn-sm'])}}
@@ -62,14 +65,15 @@
                 @endforeach
             </tbody>
         </table>
+
         <br>
-            <div class="float-right">
-                {{$books->links()}}
-            </div>
-        @else
-            <div class="container">
-                <h2>No Book To Show</h2>
-            </div>
+        <div class="float-right">
+            {{$books->links()}}
+        </div>
+    @else
+        <div class="container">
+            <h2>No Book To Show</h2>
+        </div>
     @endif
     
 @endsection

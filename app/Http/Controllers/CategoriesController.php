@@ -30,13 +30,6 @@ class CategoriesController extends Controller
         //
     }
 
-    public function searchCat(Request $request)
-    {
-        $search = $request->get('search');
-        $categories = Category::where('name', 'LIKE', "%$search%")->paginate(5);
-
-        return view('categories.search', ['categories'=> $categories, 'search'=> $search]);
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -116,5 +109,17 @@ class CategoriesController extends Controller
         $category->delete();
         
         return redirect('/categories')->with('success','Category Removed');
+    }
+
+    public function searchCat(Request $request)
+    {
+        $this->validate($request,[
+            'search' => 'required',
+        ]);
+        
+        $search = $request->get('search');
+        $categories = Category::where('name', 'LIKE', "%$search%")->paginate(5);
+
+        return view('categories.search', ['categories'=> $categories, 'search'=> $search]);
     }
 }

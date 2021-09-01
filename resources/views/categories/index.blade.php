@@ -12,6 +12,7 @@
         <div class="container"><br>
             <h2 class="display-3"><em>Categories</em></h2>
             <br><br>
+
             <!-- Button trigger modal -->
             <button type="button"   class="btn btn-dark" data-toggle="modal" data-target="#modalCenter">
                 +Add Category
@@ -43,6 +44,8 @@
             </div>
         </div>
     </div>
+
+    {{-- Search From --}}
     <div class="container">
         <form action="/searchCat" method="GET">
             <div class="input-group">
@@ -53,28 +56,34 @@
             </div>
         </form>
     </div>
+
     <br><br>
     <div class="container">
+
         @include('include.message')
+
         @if(count($categories) > 0)
             @foreach ($categories as $category)
                 <div class="card">
                     <div class="card-body">
                         <a href="/categories/{{$category->id}}"><h4>{{$category->name}}
+
                             ({{ BooksController::bookCount($category->id) }})</h4></a>
+
                         created at {{$category->created_at}} & updated at {{$category->updated_at}}
+
                         <div class="container">
-                            <div class="btn-group float-right">
-                                <a class="btn btn-primary btn-sm" href="/categories/{{$category->id}}/edit" role="button"><i class="fas fa-edit"></i></a>
-                                {!!Form::open(['action' => ['CategoriesController@destroy', $category->id], 'method' => 'POST'])!!}
-                                    {{Form::hidden('_method', 'DELETE')}}
-                                    {{Form::button('<i class="fas fa-trash-alt"></i>',['type'=>'submit', 'class'=>'btn btn-danger btn-sm'])}}
-                                {!!Form::close()!!}
-                            </div>
+                            {!!Form::open(['action' => ['CategoriesController@destroy', $category->id], 'method' => 'POST'])!!}
+                                {{Form::hidden('_method', 'DELETE')}}
+                                {{Form::button('<i class="fas fa-trash-alt"></i>',['type'=>'submit', 'class'=>'btn btn-danger btn-sm float-right'])}}
+                            {!!Form::close()!!}
+
+                            <a class="btn btn-primary btn-sm mr-2 float-right" href="/categories/{{$category->id}}/edit" role="button"><i class="fas fa-edit"></i></a>
                         </div>            
                     </div>
                 </div>
             @endforeach
+            
             <br>
             <div class="float-right">
                 {{$categories->links()}}
@@ -83,4 +92,7 @@
                 No Category to Show
         @endif
     </div>
+    <br>
+
+    @include('include.footer')
 @endsection

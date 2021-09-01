@@ -47,25 +47,28 @@ class IssuestudsController extends Controller
             'batch_id'=> 'required',
             'return' => 'required|date_format:Y-m-d'
         ]);
+
         $sroll = $request->get('roll');
         $stud = Student::where('roll', $sroll)->first();
+        if(!$stud){
+            return redirect('/issuestuds')->with('error', 'Invalid Student ID');
+        }
+
+        if(IssuestudsController::issuedBook($stud->id) >= 4){
+            return redirect('/issuestuds')->with('error', 'Student can not take more than 4 books');
+        }
+
         $bookaccess = $request->get('access_no');
         $access = Accessno::where('access_no', $bookaccess)->first();
-        /*$booktitle = $request->get('title');
-        $book = Book::where('title',$booktitle)->first();*/
+        if(!$access){
+            return redirect('/issuestuds')->with('error', 'Invalid Access no');
+        }
             
         $issuestud = new Issuestud;
         $issuestud->batch_id = $request->batch_id;
         $issuestud->student_id = $stud->id;
         $issuestud->access_id = $access->id;
         $issuestud->book_id = $access->book->id;
-        /*if($book->id == $access->book->id){
-            $issuestud->access_id = $access->id;
-            $issuestud->book_id = $book->id;
-        }
-        else{
-            return redirect('/issuestuds')->with('error','Invalid Information');
-        }*/
         $issuestud->return = $request->input('return');
 
         $issuestud->save(); 
@@ -84,12 +87,6 @@ class IssuestudsController extends Controller
         //
     }
 
-    public static function issuedBook($id)
-    {
-        $issuedBook = Issuestud::where('student_id', $id)->count();
-
-        return $issuedBook;
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -120,23 +117,22 @@ class IssuestudsController extends Controller
         ]);
         $sroll = $request->get('roll');
         $stud = Student::where('roll', $sroll)->first();
+        if(!$stud){
+            return redirect('/issuestuds')->with('error', 'Invalid Student ID');
+        }
+
         $bookaccess = $request->get('access_no');
         $access = Accessno::where('access_no', $bookaccess)->first();
-        /*$booktitle = $request->get('title');
-        $book = Book::where('title',$booktitle)->first();*/
+        if(!$access){
+            return redirect('/issuestuds')->with('error', 'Invalid Access no');
+        }
 
         $issuestud = Issuestud::find($id);
         $issuestud->batch_id = $request->batch_id;
         $issuestud->student_id = $stud->id;
         $issuestud->access_id = $access->id;
         $issuestud->book_id = $access->book->id;
-        /*if($book->id == $access->book->id){
-            $issuestud->access_id = $access->id;
-            $issuestud->book_id = $book->id;
-        }
-        else{
-            return redirect('/issuestuds')->with('error','Invalid Information');
-        }*/
+
         $issuestud->save(); 
 
         return redirect('/issuestuds')->with('success','Successfully Updated Issued Book.');
@@ -155,4 +151,13 @@ class IssuestudsController extends Controller
 
         return redirect('/issuestuds')->with('success','Removed');
     }
+
+
+    public static function issuedBook($id)
+    {
+        $issuedBook = Issuestud::where('student_id', $id)->count();
+
+        return $issuedBook;
+    }
+
 }

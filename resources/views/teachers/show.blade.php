@@ -15,10 +15,11 @@
         </div>
     </div>
     
-        @include('include.message')
-        @if(count($issueteachers) > 0)
-            <table class="table table-bordered table-dark table-hover">
-                <thead>
+    @include('include.message')
+    
+    @if(count($issueteachers) > 0)
+        <table class="table table-bordered table-dark table-hover">
+            <thead>
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Access No</th>
@@ -27,34 +28,35 @@
                     <th scope="col">Issue Date</th>
                     <th scope="col">+</th>
                 </tr>
-                </thead>
-                <tbody>
-                    @foreach($issueteachers as $key => $issueteacher)
-                        <tr>
-                            <th scope="row">{{$issueteachers->firstItem() + $key}}</th>
-                            <td>{{$issueteacher->access->access_no}}</td>
-                            <td>{{$issueteacher->book->title}}</td>
-                            <td>{{$issueteacher->book->author_name}}</td>
-                            <td>{{$issueteacher->created_at}}</td>
-                            <td>
-                                <a class="btn btn-primary btn-sm" href="/issueteachers/{{$issueteacher->id}}/edit" role="button"><i class="fas fa-edit"></i></a>
-                                {!!Form::open(['action' => ['IssueteachersController@destroy', $issueteacher->id], 'method' => 'POST', 'class'=>'float-right'])!!}
-                                    {{Form::hidden('_method', 'DELETE')}}
-                                    {{Form::button('<i class="fas fa-trash-alt"></i>', ['type'=>'submit', 'class' => 'btn btn-danger btn-sm'])}}
-                                {!!Form::close()!!}
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <br>
-            <div class="float-right">
-                {{$issueteachers->links()}}
+            </thead>
+            <tbody>
+                @foreach($issueteachers as $key => $issueteacher)
+                    <tr>
+                        <th scope="row">{{$issueteachers->firstItem() + $key}}</th>
+                        <td>{{$issueteacher->access->access_no}}</td>
+                        <td>{{$issueteacher->book->title}}</td>
+                        <td>{{$issueteacher->book->author_name}}</td>
+                        <td>{{$issueteacher->created_at}}</td>
+                        <td>
+                            <a class="btn btn-primary btn-sm" href="/issueteachers/{{$issueteacher->id}}/edit" role="button"><i class="fas fa-edit"></i></a>
+                            
+                            {!!Form::open(['action' => ['IssueteachersController@destroy', $issueteacher->id], 'method' => 'POST', 'class'=>'float-right'])!!}
+                                {{Form::hidden('_method', 'DELETE')}}
+                                {{Form::button('<i class="fas fa-trash-alt"></i>', ['type'=>'submit', 'class' => 'btn btn-danger btn-sm'])}}
+                            {!!Form::close()!!}
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+        <br>
+        <div class="float-right">
+            {{$issueteachers->links()}}
+        </div>
+        @else
+            <div class="container">
+                <h2>No Issued Book To Show</h2>
             </div>
-            @else
-                <div class="container">
-                    <h2>No Issued Book To Show</h2>
-                </div>
-        @endif
+    @endif
 
 @endsection

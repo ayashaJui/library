@@ -30,14 +30,6 @@ class TeachersController extends Controller
         return view('teachers.create');
     }
 
-    public function searchTea(Request $request)
-    {
-        $search = $request->get('search');
-        $teachers = Teacher::where('name', 'LIKE', "%$search%")->paginate(5);
-
-        return view('teachers.search', ['search'=> $search, 'teachers'=> $teachers]);
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -50,6 +42,7 @@ class TeachersController extends Controller
             'name' => 'required',
             'desig' => 'required'
         ]);
+
         $teacher = new Teacher;
         $teacher->name = $request->input('name');
         $teacher->desig = $request->input('desig');
@@ -57,6 +50,7 @@ class TeachersController extends Controller
 
         return redirect('/teachers')->with('success','New Teacher Added');
     }
+
 
     /**
      * Display the specified resource.
@@ -98,6 +92,7 @@ class TeachersController extends Controller
             'name' => 'required',
             'desig' => 'required'
         ]);
+
         $teacher = Teacher::find($id);
         $teacher->name = $request->input('name');
         $teacher->desig = $request->input('desig');
@@ -117,6 +112,19 @@ class TeachersController extends Controller
         $teacher = Teacher::find($id);
         $teacher->delete();
 
-        return redirect('/teachers')->with('success','Teacher\'s Info Removed ');
+        return redirect('/teachers')->with('success', "Teacher's Info Removed ");
+    }
+
+
+    public function searchTea(Request $request)
+    {
+        $this->validate($request,[
+            'search' => 'required',
+        ]);
+
+        $search = $request->get('search');
+        $teachers = Teacher::where('name', 'LIKE', "%$search%")->paginate(5);
+
+        return view('teachers.search', ['search'=> $search, 'teachers'=> $teachers]);
     }
 }

@@ -29,7 +29,9 @@ class IssueteachersController extends Controller
      */
     public function create()
     {
-        return view('issueteachers.create');
+        $teachers = Teacher::pluck('name', 'id');
+
+        return view('issueteachers.create')->with('teachers', $teachers);
     }
 
     /**
@@ -40,24 +42,21 @@ class IssueteachersController extends Controller
      */
     public function store(Request $request)
     {
-        $teach = $request->get('name');
-        $teacher = Teacher::where('name', $teach)->first();
+        $this->validate($request,[
+            'access_no' => 'required',
+        ]);
+
         $access = $request->get('access_no');
         $teaAccess = Accessno::where('access_no', $access)->first();
-        /*$booktitle = $request->get('title');
-        $teabook = Book::where('title',$booktitle)->first();*/
+
+        if(!$teaAccess){
+            return redirect('/issueteachers')->with('error', 'Invalid Access no');
+        }
 
         $issueteacher = new Issueteacher;
-        $issueteacher->teacher_id = $teacher->id;
+        $issueteacher->teacher_id = $request->get('teacher_id');
         $issueteacher->access_id = $teaAccess->id;
         $issueteacher->book_id = $teaAccess->book->id;
-        /*if($teabook->id == $teaAccess->book->id){
-            $issueteacher->access_id = $teaAccess->id;
-            $issueteacher->book_id = $teabook->id;
-        }
-        else{
-            return redirect('/issueteachers')->with('error','Invalid Information');
-        }*/
 
         $issueteacher->save();
 
@@ -75,12 +74,6 @@ class IssueteachersController extends Controller
         //
     }
 
-    public static function issueCount($id)
-    {
-        $issueCount = Issueteacher::where('teacher_id', $id)->count();
-
-        return $issueCount;
-    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -89,9 +82,10 @@ class IssueteachersController extends Controller
      */
     public function edit($id)
     {
+        $teachers = Teacher::pluck('name', 'id');
         $issueteacher = Issueteacher::find($id);
 
-        return view('issueteachers.edit')->with('issueteacher', $issueteacher);
+        return view('issueteachers.edit', ['issueteacher' => $issueteacher, 'teachers' => $teachers]);
     }
 
     /**
@@ -103,24 +97,21 @@ class IssueteachersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $teach = $request->get('name');
-        $teacher = Teacher::where('name', $teach)->first();
+        $this->validate($request,[
+            'access_no' => 'required',
+        ]);
+
         $access = $request->get('access_no');
         $teaAccess = Accessno::where('access_no', $access)->first();
-        /*$booktitle = $request->get('title');
-        $teabook = Book::where('title',$booktitle)->first();*/
+
+        if(!$teaAccess){
+            return redirect('/issueteachers')->with('error', 'Invalid Access no');
+        }
 
         $issueteacher = Issueteacher::find($id);
-        $issueteacher->teacher_id = $teacher->id;
+        $issueteacher->teacher_id = $request->get('teacher_id');
         $issueteacher->access_id = $teaAccess->id;
         $issueteacher->book_id = $teaAccess->book->id;
-        /*if($teabook->id == $teaAccess->book->id){
-            $issueteacher->access_id = $teaAccess->id;
-            $issueteacher->book_id = $teabook->id;
-        }
-        else{
-            return redirect('/issueteachers')->with('error','Invalid Information');
-        }*/
 
         $issueteacher->save();
 
@@ -139,5 +130,13 @@ class IssueteachersController extends Controller
         $issueteacher->delete();
 
         return redirect('/issueteachers')->with('success', 'Removed Info');
+    }
+    
+
+    public static function issueCount($id)
+    {
+        $issueCount = Issueteacher::where('teacher_id', $id)->count();
+
+        return $issueCount;
     }
 }

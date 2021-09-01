@@ -1,12 +1,12 @@
 <!-- navbar -->
-<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="/">CSE Seminar Library</a>
+      <a class="navbar-brand" href="/" style="font-size: 1.5rem;">CSE Seminar Library</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
     
-      <div class="collapse navbar-collapse" id="navbarContent">
+      <div class="collapse navbar-collapse" id="navbarContent" style="font-size: 1rem;">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>

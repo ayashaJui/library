@@ -30,15 +30,8 @@ class BooksController extends Controller
      */
     public function create()
     {   
-        return view('books.create');
-    }
-
-    public function searchBook(Request $request)
-    {
-        $search = $request->get('search');
-        $books = Book::where('title', 'LIKE', "%$search%")->paginate(5);
-
-        return view('books.search', ['books'=> $books, 'search'=> $search]);
+        $categories = Category::pluck('name', 'id');
+        return view('books.create')->with('categories', $categories);
     }
 
     /**
@@ -53,13 +46,12 @@ class BooksController extends Controller
             'title'=>'required',
             'author_name' => 'required'
         ]);
-        $catname = $request->get('name');
-        $bookcategory = Category::where('name',$catname)->first();
+        
 
         $book = new Book;
         $book->title = $request->input('title');
         $book->author_name = $request->input('author_name');
-        $book->category_id = $bookcategory->id;
+        $book->category_id = $request->get('cat_id');
         $book->publisher = $request->input('publisher');
         $book->edition = $request->input('edition');
 
@@ -82,23 +74,6 @@ class BooksController extends Controller
         return view('books.show', ['bookAccessno'=> $bookAccessno, 'book'=> $book]);
     }
 
-    public static function bookCount($id)
-    {
-        $bookCount = Book::where('category_id', $id)->count();
-
-        return $bookCount;
-    }
-
-    public static function quantity($id)
-    {
-        $totalBook = Accessno::where('book_id', $id)->count();
-        $studIssue = Issuestud::where('book_id', $id)->count();
-        $teaIssue = Issueteacher::where('book_id', $id)->count();
-
-        $quantity = ( $totalBook - ( $studIssue + $teaIssue));
-
-        return $quantity;
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -109,8 +84,10 @@ class BooksController extends Controller
     public function edit($id)
     {
         $book = Book::find($id);
-        
-        return view('books.edit')->with('book', $book);
+
+        $categories = Category::pluck('name', 'id');
+
+        return view('books.edit', ['book' => $book, 'categories' => $categories ]);
     }
 
     /**
@@ -126,13 +103,11 @@ class BooksController extends Controller
             'title'=>'required',
             'author_name' => 'required'
         ]);
-        $catname = $request->get('name');
-        $bookcategory = Category::where('name',$catname)->first();
 
         $book = Book::find($id);
         $book->title = $request->input('title');
         $book->author_name = $request->input('author_name');
-        $book->category_id = $bookcategory->id;
+        $book->category_id = $request->get('cat_id');
         $book->publisher = $request->input('publisher');
         $book->edition = $request->input('edition');
 
@@ -153,5 +128,37 @@ class BooksController extends Controller
         $book->delete();
 
         return redirect('/books')->with('success','Book Removed');
+    }
+
+
+
+    public function searchBook(Request $request)
+    {
+        $this->validate($request,[
+            'search' => 'required',
+        ]);
+        
+        $search = $request->get('search');
+        $books = Book::where('title', 'LIKE', "%$search%")->paginate(5);
+
+        return view('books.search', ['books'=> $books, 'search'=> $search]);
+    }
+
+    public static function bookCount($id)
+    {
+        $bookCount = Book::where('category_id', $id)->count();
+
+        return $bookCount;
+    }
+
+    public static function availQuantity($id)
+    {
+        $totalBook = Accessno::where('book_id', $id)->count();
+        $studIssue = Issuestud::where('book_id', $id)->count();
+        $teaIssue = Issueteacher::where('book_id', $id)->count();
+
+        $quantity = ( $totalBook - ( $studIssue + $teaIssue));
+
+        return $quantity;
     }
 }

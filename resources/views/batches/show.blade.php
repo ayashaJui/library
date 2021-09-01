@@ -15,6 +15,7 @@
             <a class="btn btn-dark" href="/students/create" role="button">+Add New Student</a>
         </div>
     </div>
+
     <div class="container">
         <form action="/searchStud" method="GET">
             <div class="input-group">
@@ -25,9 +26,12 @@
             </div>
         </form>
     </div>
+
     <br><br>
     <div class="container">
+
         @include('include.message')
+
         @if(count($batchstuds) > 0)
             <table class="table table-bordered table-dark table-hover">
                 <thead>
@@ -42,12 +46,14 @@
                 <tbody>
                     @foreach($batchstuds as $batchstud)
                         <tr>
-                            <th scope="row"><a href="/students/{{$batchstud->id}}">{{$batchstud->roll}}({{ IssuestudsController::issuedBook($batchstud->id) }})</a></th>
+                            <th scope="row"><a href="/students/{{$batchstud->id}}">{{$batchstud->roll}}
+                                ({{ IssuestudsController::issuedBook($batchstud->id) }})</a></th>
                             <td>{{$batchstud->name}}</td>
                             <td>{{$batchstud->batch->title}}</td>
                             <td>{{$batchstud->batch->program}}</td>
                             <td>
                                 <a class="btn btn-primary btn-sm" href="/students/{{$batchstud->id}}/edit" role="button"><i class="fas fa-edit"></i></a>
+                                
                                 {!!Form::open(['action' => ['StudentsController@destroy', $batchstud->id], 'method' => 'POST', 'class'=>'float-right'])!!}
                                     {{Form::hidden('_method', 'DELETE')}}
                                     {{Form::button('<i class="fas fa-trash-alt"></i>', ['type'=>'submit', 'class' => 'btn btn-danger btn-sm'])}}
@@ -61,8 +67,10 @@
             <div class="float-right">
                 {{$batchstuds->links()}}
             </div>
-            @else
-                <h3>No Student To Show</h3>
+        @else
+            <h3>No Student To Show</h3>
         @endif
     </div>
+
+    @include('include.footer')
 @endsection

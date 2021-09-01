@@ -7,15 +7,15 @@
 @section('content')
     <div class="container">
         <br><br><br>
-        <h3>Update Category</h3>
+        <h3 class="mt-5">Update Category</h3>
         <br>
         {!!Form::open(['action' => ['CategoriesController@update', $category->id], 'method' => 'POST'])!!}
             <div class="form-group">
                 {{Form::label('name','Category Name')}}
-                {{Form::text('name','',['class' => 'form-control', 'placeholder' => 'Name'])}}
+                {{Form::text('name', $category->name, ['class' => 'form-control', 'placeholder' => 'Name' ])}}
             </div>
             {{Form::hidden('_method','PUT')}}
-            {{Form::submit('Add', ['class' => 'btn btn-primary'])}}
+            {{Form::submit('Update', ['class' => 'btn btn-primary'])}}
         {!!Form::close()!!}
 
         <div class="text-right">

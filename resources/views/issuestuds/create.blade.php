@@ -7,7 +7,11 @@
 @section('content')
     <div class="container">
         <br><br><br>
-        <h3>Issue A New Book</h3>
+        <h3 class="mt-5">Issue A New Book</h3>
+        <br>
+
+        @include('include.message')
+
         <br>
         {!!Form::open(['action' => 'IssuestudsController@store', 'method' => 'POST'])!!}
             <div class="form-group">

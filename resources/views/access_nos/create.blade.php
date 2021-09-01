@@ -7,9 +7,13 @@
 @section('content')
     <div class="container">
         <br><br><br><br>
-        <h2>Book Title: {{$book->title}}</h2>
+        <h2 class="mt-5">Book Title: {{$book->title}}</h2>
         <br>
         <h3>Add A New Access No</h3>
+        <br>
+
+        @include('include.message')
+
         <br>
         {!!Form::open(['action' => ['AccessnosController@store', $book->id], 'method' => 'POST'])!!}
             <div class="form-group">
@@ -20,7 +24,7 @@
         {!!Form::close()!!}
 
         <div class="text-right">
-            <a  href="/books" class="btn btn-info">Back</a>
+            <a  href="/books/{{$book->id}}" class="btn btn-info">Back</a>
         </div>
     </div>
 @endsection

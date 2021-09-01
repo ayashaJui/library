@@ -42,14 +42,9 @@ class AccessnosController extends Controller
         $this->validate($request,[
             'access_no'=>'required'
         ]);
-        //$cat = $request->get('name');
-        //$accessCat = Category::where('name', $cat)->first();
-        /*$booktitle = $request->get('title');
-        $ed = $request->get('edition');
-        $accessBook = Book::where('title',$booktitle)
-                            ->where('edition', $ed)->first();*/
         
         $accessbook = Book::find($id);
+
         $accessno = new Accessno;
         $accessno->access_no = $request->input('access_no');
         $accessno->category_id = $accessbook->category->id;
@@ -57,7 +52,7 @@ class AccessnosController extends Controller
 
         $accessno->save(); 
 
-        return redirect('/books')->with('success','Successfully Added New Access No.');
+        return redirect('/books/'. $accessbook->id)->with('success','Successfully Added New Access No.');
     }
 
     /**
@@ -71,12 +66,6 @@ class AccessnosController extends Controller
         //
     }
 
-    public static function accessCount($id)
-    {
-        $accessCount = Accessno::where('book_id', $id)->count();
-
-        return $accessCount;
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -104,22 +93,17 @@ class AccessnosController extends Controller
         $this->validate($request,[
             'access_no'=>'required'
         ]);
-        /*$cat = $request->get('name');
-        $accessCat = Category::where('name', $cat)->first();
-        $booktitle = $request->get('title');
-        $ed = $request->get('edition');
-        $accessBook = Book::where('title',$booktitle)
-                            ->where('edition', $ed)->first();*/
 
         $accessno = Accessno::find($id);
-        $accessbook = Book::find($book_id);    
+        $accessbook = Book::find($book_id); 
+        
         $accessno->access_no = $request->input('access_no');
         $accessno->category_id = $accessbook->category->id;
         $accessno->book_id = $accessbook->id;
 
         $accessno->save(); 
 
-        return redirect('/books')->with('success','Successfully Updated Access No.');
+        return redirect('/books/'. $accessbook->id )->with('success','Successfully Updated Access No.');
     }
 
     /**
@@ -134,5 +118,12 @@ class AccessnosController extends Controller
         $accessno->delete();
 
         return redirect('/books')->with('success','Access No Removed');
+    }
+
+    public static function accessCount($id)
+    {
+        $accessCount = Accessno::where('book_id', $id)->count();
+
+        return $accessCount;
     }
 }

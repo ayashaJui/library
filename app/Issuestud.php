@@ -24,8 +24,4 @@ class Issuestud extends Model
     public function book(){
         return $this->belongsTo('App\Book','book_id');
     }
-    /*public static function issuecount($student_id){
-        $studCount = Issuestud::where('student_id', $student_id)->count();
-        return $studCount;
-    }*/
 }

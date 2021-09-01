@@ -7,7 +7,11 @@
 @section('content')
     <div class="container">
         <br><br><br>
-        <h3>Add A New Student</h3>
+        <h3 class="mt-5">Add A New Student</h3>
+        <br>
+
+        @include('include.message')
+
         <br>
         {!!Form::open(['action' => 'StudentsController@store', 'method' => 'POST'])!!}
             <div class="form-group">
@@ -21,6 +25,7 @@
             <div class="form-group">
                 {{Form::label('batch_id','Select Batch & Program:')}}
                 <select class="form-control" name="batch_id" id="">
+                    <option value="">Select</option>
                     @foreach($studbatches as $studbatch)
                         <option value="{{$studbatch->id}}">
                             {{$studbatch->title}}, {{$studbatch->program}}

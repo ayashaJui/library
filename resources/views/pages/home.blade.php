@@ -12,6 +12,7 @@
           <li data-target="#carouselCaptions" data-slide-to="1"></li>
           <li data-target="#carouselCaptions" data-slide-to="2"></li>
         </ol>
+
         <div class="carousel-inner">
           <div class="carousel-item active">
             <img src="pic/bgHome1.jpg" class="d-block w-100" alt="First Slide">
@@ -22,6 +23,7 @@
               </blockquote>
             </div>
           </div>
+
           <div class="carousel-item">
             <img src="pic/bgHome2.jpg" class="d-block w-100" alt="Second Slide">
             <div class="carousel-caption d-none d-md-block">
@@ -29,6 +31,7 @@
               <a href="/books" class="btn btn-dark btn-md active" role="button" aria-pressed="true">Books</a>
             </div>
           </div>
+          
           <div class="carousel-item">
             <img src="pic/bgHome3.jpg" class="d-block w-100" alt="Third Slide">
             <div class="carousel-caption d-none d-md-block">
@@ -38,6 +41,7 @@
             </div>
           </div>
         </div>
+
         <a class="carousel-control-prev" href="#carouselCaptions" role="button" data-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="sr-only">Previous</span>

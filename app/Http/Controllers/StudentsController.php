@@ -44,6 +44,7 @@ class StudentsController extends Controller
             'name' => 'required',
             'batch_id' => 'required'
         ]);
+
         $student = new Student;
         $student->roll = $request->input('roll');
         $student->name = $request->input('name');
@@ -53,6 +54,7 @@ class StudentsController extends Controller
 
         return redirect('/batches')->with('success','Successfully Added New Student.');
     }
+
 
     /**
      * Display the specified resource.
@@ -66,13 +68,6 @@ class StudentsController extends Controller
         $student = Student::find($id);
 
         return view('students.show', ['studissues' =>$studissues, 'student' =>$student]);
-    }
-
-    public static function studentCount($id)
-    {
-        $studentCount = Student::where('batch_id', $id)->count();
-        
-        return $studentCount;
     }
 
     /**
@@ -103,6 +98,7 @@ class StudentsController extends Controller
             'name' => 'required',
             'batch_id' => 'required'
         ]);
+
         $student = Student::find($id);
         $student->roll = $request->input('roll');
         $student->name = $request->input('name');
@@ -110,7 +106,7 @@ class StudentsController extends Controller
 
         $student->save(); 
 
-        return redirect('/batches')->with('success','Successfully Updated Student Info.');
+        return redirect('/batches/'. $student->batch_id)->with('success','Successfully Updated Student Info.');
     }
 
     /**
@@ -126,5 +122,26 @@ class StudentsController extends Controller
         $student->delete();
 
         return redirect('/batches')->with('success','Student Removed');
+    }
+
+
+    public function searchStud(Request $request)
+    {
+        $this->validate($request,[
+            'search' => 'required'
+        ]);
+
+        $search = $request->get('search');
+        $batchstuds = Student::where('roll', 'LIKE', "%$search%")->paginate(5);
+
+        return view('students.search', ['search'=> $search, 'batchstuds'=> $batchstuds]);
+    }
+
+
+    public static function studentCount($id)
+    {
+        $studentCount = Student::where('batch_id', $id)->count();
+        
+        return $studentCount;
     }
 }

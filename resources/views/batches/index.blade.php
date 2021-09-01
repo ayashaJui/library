@@ -14,7 +14,7 @@
             <br><br>
             <!-- Button trigger modal -->
             <button type="button"   class="btn btn-dark" data-toggle="modal" data-target="#modalCenter">
-               +Add Batch
+                +Add Batch
             </button>
             <!-- Modal -->
             <div class="modal fade" id="modalCenter" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle" aria-hidden="true">
@@ -31,7 +31,7 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Batch No</label>
-                                    <input type="text" name="title" class="form-control" placeholder="Batch" aria-describedby="batchHelp">
+                                    <input type="text" name="batch" class="form-control" placeholder="Batch" aria-describedby="batchHelp">
                                 </div>
                                 <div class="form-group">
                                     <label>Program Name</label>
@@ -47,33 +47,40 @@
             </div>
         </div>
     </div>
+
     <div class="container">
         @include('include.message')
+
         @if(count($batches) > 0)
             @foreach ($batches as $batch)
                 <div class="card">
                     <div class="card-body">
-                        <a href="/batches/{{$batch->id}}"><h4>Batch'{{$batch->title}}({{ StudentsController::studentCount($batch->id)}})</h4></a>
-                        <p>Program:{{$batch->program}}</p>
+                        <a href="/batches/{{$batch->id}}">
+                            <h4>Batch'{{$batch->title}}
+                            ({{ StudentsController::studentCount($batch->id)}})</h4>
+                        </a>
+                        <p>Program: {{$batch->program}}</p>
                         created at {{$batch->created_at}} & updated at {{$batch->updated_at}}
                         <div class="container">
-                            <div class="btn-group float-right">
-                                <a class="btn btn-primary btn-sm" href="/batches/{{$batch->id}}/edit" role="button"><i class="fas fa-edit"></i></a>
-                                {!!Form::open(['action' => ['BatchesController@destroy', $batch->id], 'method' => 'POST'])!!}
-                                    {{Form::hidden('_method', 'DELETE')}}
-                                    {{Form::button('<i class="fas fa-trash-alt"></i>',['type'=>'submit', 'class'=>'btn btn-danger btn-sm'])}}
-                                {!!Form::close()!!}
-                            </div>
+                            {!!Form::open(['action' => ['BatchesController@destroy', $batch->id], 'method' => 'POST'])!!}
+                                {{Form::hidden('_method', 'DELETE')}}
+                                {{Form::button('<i class="fas fa-trash-alt"></i>',['type'=>'submit', 'class'=>'btn btn-danger btn-sm float-right'])}}
+                            {!!Form::close()!!}
+
+                            <a class="btn btn-primary btn-sm float-right mr-2" href="/batches/{{$batch->id}}/edit" role="button"><i class="fas fa-edit"></i></a>
                         </div>          
                     </div>
                 </div>
             @endforeach
+
             <br>
             <div class="float-right">
                 {{$batches->links()}}
             </div>
-            @else
-                <h3>No Batch To Show</h3>
+        @else
+            <h3>No Batch To Show</h3>
         @endif
     </div>
+
+    @include('include.footer')
 @endsection

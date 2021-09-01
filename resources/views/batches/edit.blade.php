@@ -7,23 +7,27 @@
 @section('content')
     <div class="container">
         <br><br><br>
-        <h3>Update Batch Info</h3>
+        <h3 class="mt-5">Update Batch Info</h3>
+        <br>
+
+        @include('include.message')
+
         <br>
         {!!Form::open(['action' => ['BatchesController@update', $batch->id], 'method' => 'POST'])!!}
             <div class="form-group">
-                {{Form::label('title','Batch No')}}
-                {{Form::text('title','',['class' => 'form-control', 'placeholder' => 'Batch'])}}
+                {{Form::label('batch','Batch No')}}
+                {{Form::text('batch', $batch->title ,['class' => 'form-control', 'placeholder' => 'Batch'])}}
             </div>
             <div class="form-group">
                 {{Form::label('program','Program Name')}}
-                {{Form::text('program','',['class' => 'form-control', 'placeholder' => 'Program'])}}
+                {{Form::text('program', $batch->program, ['class' => 'form-control', 'placeholder' => 'Program'])}}
             </div>
             {{Form::hidden('_method','PUT')}}
-            {{Form::submit('Add', ['class' => 'btn btn-primary'])}}
+            {{Form::submit('Update', ['class' => 'btn btn-primary'])}}
         {!!Form::close()!!}
 
         <div class="text-right">
-            <a  href="/categories" class="btn btn-info">Back</a>
+            <a  href="/batches" class="btn btn-info">Back</a>
         </div>
     </div>
 @endsection

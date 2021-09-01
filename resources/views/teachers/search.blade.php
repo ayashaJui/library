@@ -15,6 +15,7 @@
             <br><br>
         </div>
     </div>
+
     <div class="container">
         <form action="/searchTea" method="GET">
             <div class="input-group">
@@ -25,9 +26,12 @@
             </div>
         </form>
     </div>
+
     <br><br>
     <div class="container">
+
         @include('include.message')
+
         @if(count($teachers) > 0)
             <table class="table table-bordered table-dark table-hover">
                 <thead>
@@ -40,10 +44,12 @@
                 <tbody>
                     @foreach($teachers as $teacher)
                         <tr>
-                            <th scope="row"><a href="/teachers/{{$teacher->id}}">{{$teacher->name}}({{ IssueteachersController::issueCount($teacher->id) }})</a></th>
+                            <th scope="row"><a href="/teachers/{{$teacher->id}}">{{$teacher->name}}
+                                ({{ IssueteachersController::issueCount($teacher->id) }})</a></th>
                             <td>{{$teacher->desig}}</td>
                             <td>
                                 <a class="btn btn-primary btn-sm" href="/teachers/{{$teacher->id}}/edit" role="button"><i class="fas fa-edit"></i></a>
+
                                 {!!Form::open(['action' => ['TeachersController@destroy', $teacher->id], 'method' => 'POST', 'class'=>'float-right'])!!}
                                     {{Form::hidden('_method', 'DELETE')}}
                                     {{Form::button('<i class="fas fa-trash-alt"></i>', ['type'=>'submit', 'class' => 'btn btn-danger btn-sm'])}}
@@ -53,12 +59,14 @@
                     @endforeach
                 </tbody>
             </table>
+
             <br>
             <div class="float-right">
                 {{$teachers->links()}}
             </div>
-            @else
-                <h2>No Teacher To Show</h2>
+
+        @else
+            <h2>No Teacher To Show</h2>
         @endif
     </div>
 @endsection

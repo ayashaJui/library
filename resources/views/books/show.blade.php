@@ -12,8 +12,11 @@
             <a class="btn btn-dark" href="/access_nos/{{$book->id}}" role="button">+Add New Access No</a>
         </div>
     </div>
+
     <div class="container">
+
         @include('include.message')
+
         @if(count($bookAccessno) > 0)
             <table class="table table-bordered table-dark table-hover">
                 <thead>
@@ -30,6 +33,7 @@
                             <td>{{$bookAccess->access_no}}</td>
                             <td>
                                 <a class="btn btn-primary btn-sm" href="/access_nos/{{$bookAccess->book->id}}/{{$bookAccess->id}}/edit" role="button"><i class="fas fa-edit"></i></a>
+                                
                                 {!!Form::open(['action' => ['AccessnosController@destroy', $bookAccess->id], 'method' => 'POST', 'class'=>'float-right'])!!}
                                     
                                     {{Form::button('<i class="fas fa-trash-alt"></i>',['type'=>'submit', 'class'=>'btn btn-danger btn-sm'])}}

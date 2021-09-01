@@ -14,10 +14,10 @@
 Route::get('/', 'PagesController@home');
 
 //....Search...
-Route::get('/searchBook', 'BooksController@searchBook');
 Route::get('/searchCat', 'CategoriesController@searchCat');
+Route::get('/searchBook', 'BooksController@searchBook');
 Route::get('/searchTea', 'TeachersController@searchTea');
-Route::get('/searchStud', 'BatchesController@searchStud');
+Route::get('/searchStud', 'StudentsController@searchStud');
 
 //....AccessnosController....
 Route::get('access_nos/{id}', 'AccessnosController@create');

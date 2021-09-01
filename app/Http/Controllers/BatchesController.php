@@ -30,13 +30,6 @@ class BatchesController extends Controller
         //
     }
 
-    public function searchStud(Request $request)
-    {
-        $search = $request->get('search');
-        $batchstuds = Student::where('roll', 'LIKE', "%$search%")->paginate(5);
-
-        return view('batches.search', ['search'=> $search, 'batchstuds'=> $batchstuds]);
-    }
     /**
      * Store a newly created resource in storage.
      *
@@ -46,17 +39,19 @@ class BatchesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'title' => 'required',
+            'batch' => 'required',
             'program' => 'required'
         ]);
+
         $batch = new Batch;
-        $batch->title = $request->input('title');
+        $batch->title = $request->input('batch');
         $batch->program = $request->input('program');
 
         $batch->save();
         
         return redirect('/batches')->with('success','Batch Created');
     }
+
 
     /**
      * Display the specified resource.
@@ -95,11 +90,11 @@ class BatchesController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-            'title' => 'required',
+            'batch' => 'required',
             'program' => 'required'
         ]);
         $batch = Batch::find($id);
-        $batch->title = $request->input('title');
+        $batch->title = $request->input('batch');
         $batch->program = $request->input('program');
 
         $batch->save();
