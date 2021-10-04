@@ -64,7 +64,7 @@
 
         @if(count($categories) > 0)
             @foreach ($categories as $category)
-                <div class="card">
+                <div class="card my-2">
                     <div class="card-body">
                         <a href="/categories/{{$category->id}}"><h4>{{$category->name}}
 

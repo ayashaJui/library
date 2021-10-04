@@ -35,7 +35,7 @@
                                 <a class="btn btn-primary btn-sm" href="/access_nos/{{$bookAccess->book->id}}/{{$bookAccess->id}}/edit" role="button"><i class="fas fa-edit"></i></a>
                                 
                                 {!!Form::open(['action' => ['AccessnosController@destroy', $bookAccess->id], 'method' => 'POST', 'class'=>'float-right'])!!}
-                                    
+                                    {{Form::hidden('_method', 'DELETE')}}
                                     {{Form::button('<i class="fas fa-trash-alt"></i>',['type'=>'submit', 'class'=>'btn btn-danger btn-sm'])}}
                                 {!!Form::close()!!}
                             </td>

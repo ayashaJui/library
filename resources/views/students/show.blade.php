@@ -10,7 +10,8 @@
             <br>
             <h2 class="display-3" style="color: cornsilk"><em>Issued Books</em></h2>
             <h1 class="font-weight-bolder" style="color: cornsilk; font-size: 2.5rem; letter-spacing: 1px;">{{$student->roll}}</h1>
-            <br><br><br>
+            <br><br>
+            <a class="btn btn-dark" href="/issuestuds/create" role="button">+Issue New Book</a>
         </div>
     </div>
     

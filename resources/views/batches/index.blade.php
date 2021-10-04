@@ -53,7 +53,7 @@
 
         @if(count($batches) > 0)
             @foreach ($batches as $batch)
-                <div class="card">
+                <div class="card my-3">
                     <div class="card-body">
                         <a href="/batches/{{$batch->id}}">
                             <h4>Batch'{{$batch->title}}

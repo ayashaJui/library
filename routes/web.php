@@ -24,7 +24,7 @@ Route::get('access_nos/{id}', 'AccessnosController@create');
 Route::post('store/{id}', 'AccessnosController@store');
 Route::get('/access_nos/{book_id}/{id}/edit', 'AccessnosController@edit');
 Route::put('update/{book_id}/{id}', 'AccessnosController@update');
-Route::post('destroy/{id}', 'AccessnosController@destroy');
+Route::delete('destroy/{id}', 'AccessnosController@destroy');
 
 //...Resource.....
 Route::resource('categories','CategoriesController');

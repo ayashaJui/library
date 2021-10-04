@@ -17,6 +17,7 @@
             <div class="form-group">
                 {{Form::label('batch_id','Select Program:')}}
                 <select class="form-control" name="batch_id" id="">
+                    <option value="">Select</option>
                     @foreach($batchissues as $batchissue)
                         <option value="{{$batchissue->id}}">
                             {{$batchissue->title}}({{$batchissue->program}})
