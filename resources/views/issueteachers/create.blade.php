@@ -16,7 +16,6 @@
         {!!Form::open(['action' => 'IssueteachersController@store', 'method' => 'POST'])!!}
             <div class="form-group">
                 {{Form::label('name','Teacher\'s Name')}}
-                {{-- {{Form::text('name','',['class' => 'form-control', 'placeholder' => 'name'])}} --}}
                 {{ Form::select('teacher_id', $teachers, null, ['class' => 'form-control','placeholder' => 'Select teacher']) }}
             </div>
             <div class="form-group">

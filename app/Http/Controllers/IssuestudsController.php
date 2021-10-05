@@ -44,11 +44,13 @@ class IssuestudsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'batch_id'=> 'required',
-            'return' => 'required|date_format:Y-m-d'
+            'batch_id'  => 'required',
+            'roll'      => 'required',
+            'access_no' => 'required',
+            'return'    => 'required|date_format:Y-m-d'
         ]);
 
-        $sroll = $request->get('roll');
+        $sroll = $request->input('roll');
         $stud = Student::where('roll', $sroll)->first();
         if(!$stud){
             return redirect('/issuestuds')->with('error', 'Invalid Student ID');
@@ -58,14 +60,14 @@ class IssuestudsController extends Controller
             return redirect('/issuestuds')->with('error', 'Student can not take more than 4 books');
         }
 
-        $bookaccess = $request->get('access_no');
+        $bookaccess = $request->input('access_no');
         $access = Accessno::where('access_no', $bookaccess)->first();
         if(!$access){
             return redirect('/issuestuds')->with('error', 'Invalid Access no');
         }
             
         $issuestud = new Issuestud;
-        $issuestud->batch_id = $request->batch_id;
+        $issuestud->batch_id = $request->input('batch_id');
         $issuestud->student_id = $stud->id;
         $issuestud->access_id = $access->id;
         $issuestud->book_id = $access->book->id;
@@ -112,26 +114,30 @@ class IssuestudsController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'batch_id'=> 'required',
+            'batch_id'  => 'required',
+            'roll'      => 'required',
+            'access_no' => 'required',
             'return' => 'required|date_format:Y-m-d'
         ]);
-        $sroll = $request->get('roll');
+
+        $sroll = $request->input('roll');
         $stud = Student::where('roll', $sroll)->first();
         if(!$stud){
             return redirect('/issuestuds')->with('error', 'Invalid Student ID');
         }
 
-        $bookaccess = $request->get('access_no');
+        $bookaccess = $request->input('access_no');
         $access = Accessno::where('access_no', $bookaccess)->first();
         if(!$access){
             return redirect('/issuestuds')->with('error', 'Invalid Access no');
         }
 
         $issuestud = Issuestud::find($id);
-        $issuestud->batch_id = $request->batch_id;
+        $issuestud->batch_id = $request->input('batch_id');
         $issuestud->student_id = $stud->id;
         $issuestud->access_id = $access->id;
         $issuestud->book_id = $access->book->id;
+        $issuestud->return = $request->input('return');
 
         $issuestud->save(); 
 

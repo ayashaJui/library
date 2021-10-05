@@ -15,7 +15,7 @@ class BatchesController extends Controller
      */
     public function index()
     {
-        $batches = Batch::orderBy('title', 'asc')->paginate(5);
+        $batches = Batch::orderBy('title', 'desc')->paginate(5);
 
         return view('batches.index')->with('batches', $batches);
     }

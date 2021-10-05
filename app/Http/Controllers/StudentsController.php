@@ -131,7 +131,7 @@ class StudentsController extends Controller
             'search' => 'required'
         ]);
 
-        $search = $request->get('search');
+        $search = $request->input('search');
         $batchstuds = Student::where('roll', 'LIKE', "%$search%")->paginate(5);
 
         return view('students.search', ['search'=> $search, 'batchstuds'=> $batchstuds]);

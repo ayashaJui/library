@@ -42,6 +42,7 @@ class CategoriesController extends Controller
         $this->validate($request,[
             'name' => 'required'
         ]);
+        
         $category = new Category;
         $category->name = $request->input('name');
 
@@ -117,7 +118,7 @@ class CategoriesController extends Controller
             'search' => 'required',
         ]);
         
-        $search = $request->get('search');
+        $search = $request->input('search');
         $categories = Category::where('name', 'LIKE', "%$search%")->paginate(5);
 
         return view('categories.search', ['categories'=> $categories, 'search'=> $search]);

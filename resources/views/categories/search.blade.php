@@ -81,13 +81,13 @@
                     </div>          
                 </div>
             </div>
-        @endforeach
+            @endforeach
         <br>
         <div class="float-right">
             {{$categories->links()}}
         </div>
         @else
             No Category to Show
-    @endif
-</div>
+        @endif
+    </div>
 @endsection

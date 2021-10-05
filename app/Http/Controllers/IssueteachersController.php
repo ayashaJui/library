@@ -46,7 +46,7 @@ class IssueteachersController extends Controller
             'access_no' => 'required',
         ]);
 
-        $access = $request->get('access_no');
+        $access = $request->input('access_no');
         $teaAccess = Accessno::where('access_no', $access)->first();
 
         if(!$teaAccess){
@@ -54,7 +54,7 @@ class IssueteachersController extends Controller
         }
 
         $issueteacher = new Issueteacher;
-        $issueteacher->teacher_id = $request->get('teacher_id');
+        $issueteacher->teacher_id = $request->input('teacher_id');
         $issueteacher->access_id = $teaAccess->id;
         $issueteacher->book_id = $teaAccess->book->id;
 
@@ -101,7 +101,7 @@ class IssueteachersController extends Controller
             'access_no' => 'required',
         ]);
 
-        $access = $request->get('access_no');
+        $access = $request->input('access_no');
         $teaAccess = Accessno::where('access_no', $access)->first();
 
         if(!$teaAccess){
@@ -109,7 +109,7 @@ class IssueteachersController extends Controller
         }
 
         $issueteacher = Issueteacher::find($id);
-        $issueteacher->teacher_id = $request->get('teacher_id');
+        $issueteacher->teacher_id = $request->input('teacher_id');
         $issueteacher->access_id = $teaAccess->id;
         $issueteacher->book_id = $teaAccess->book->id;
 

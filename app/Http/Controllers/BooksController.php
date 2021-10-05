@@ -51,7 +51,7 @@ class BooksController extends Controller
         $book = new Book;
         $book->title = $request->input('title');
         $book->author_name = $request->input('author_name');
-        $book->category_id = $request->get('cat_id');
+        $book->category_id = $request->input('cat_id');
         $book->publisher = $request->input('publisher');
         $book->edition = $request->input('edition');
 
@@ -138,7 +138,7 @@ class BooksController extends Controller
             'search' => 'required',
         ]);
         
-        $search = $request->get('search');
+        $search = $request->input('search');
         $books = Book::where('title', 'LIKE', "%$search%")->paginate(5);
 
         return view('books.search', ['books'=> $books, 'search'=> $search]);

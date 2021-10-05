@@ -88,8 +88,8 @@
             <div class="float-right">
                 {{$categories->links()}}
             </div>
-            @else
-                No Category to Show
+        @else
+            No Category to Show
         @endif
     </div>
     <br>

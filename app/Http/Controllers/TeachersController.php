@@ -122,7 +122,7 @@ class TeachersController extends Controller
             'search' => 'required',
         ]);
 
-        $search = $request->get('search');
+        $search = $request->input('search');
         $teachers = Teacher::where('name', 'LIKE', "%$search%")->paginate(5);
 
         return view('teachers.search', ['search'=> $search, 'teachers'=> $teachers]);
